@@ -34,12 +34,12 @@
 
     <div class="expense-report-table-wrap">
         <table class="expense-report-table">
-            <thead><tr><th>#</th><th>{{ __('Month') }}</th><th>{{ __('Company') }}</th><th>{{ __('Administration') }}</th><th>{{ __('Location') }}</th><th>WO / SA / TO</th><th>{{ __('Expenses') }}</th><th>{{ __('Exchange rate') }}</th><th>{{ __('Total LYD') }}</th><th>{{ __('Received') }}</th><th>{{ __('Returned to Financial') }}</th><th>{{ __('Remarks') }}</th></tr></thead>
+            <thead><tr><th>#</th><th>{{ __('Month') }}</th><th>{{ __('Company') }}</th><th>{{ __('Business Field') }}</th><th>{{ __('Administration') }}</th><th>{{ __('Location') }}</th><th>WO / SA / TO</th><th>{{ __('Expenses') }}</th><th>{{ __('Exchange rate') }}</th><th>{{ __('Total LYD') }}</th><th>{{ __('Received') }}</th><th>{{ __('Returned to Financial') }}</th><th>{{ __('Remarks') }}</th></tr></thead>
             <tbody>
             @forelse($invoices as $invoice)
-                <tr><td>{{ $loop->iteration }}</td><td>{{ app()->isLocale('ar') ? $arabicMonths[$invoice->invoice_month] : $invoice->invoice_date->format('F') }} {{ $invoice->invoice_year }}</td><td>{{ $invoice->company->name }}</td><td>{{ $invoice->administration?->name ?? '—' }}</td><td>{{ $invoice->location }}</td><td dir="ltr">{{ $invoice->agreement_references }}</td><td dir="ltr">{{ number_format($invoice->amount,2) }}</td><td dir="ltr">{{ number_format($invoice->exchange_rate,6) }}</td><td dir="ltr"><strong>{{ number_format($invoice->total_lyd,2) }}</strong></td><td dir="ltr">{{ $invoice->received_date?->format('Y/m/d') ?? '—' }}</td><td dir="ltr">{{ $invoice->financial_return_date?->format('Y/m/d') ?? '—' }}</td><td>{{ $invoice->notes ?: '—' }}</td></tr>
+                <tr><td>{{ $loop->iteration }}</td><td>{{ app()->isLocale('ar') ? $arabicMonths[$invoice->invoice_month] : $invoice->invoice_date->format('F') }} {{ $invoice->invoice_year }}</td><td>{{ $invoice->company->name }}</td><td>{{ $invoice->company->business_field ?: '—' }}</td><td>{{ $invoice->administration?->name ?? '—' }}</td><td>{{ $invoice->location }}</td><td dir="ltr">{{ $invoice->agreement_references }}</td><td dir="ltr">{{ number_format($invoice->amount,2) }}</td><td dir="ltr">{{ number_format($invoice->exchange_rate,6) }}</td><td dir="ltr"><strong>{{ number_format($invoice->total_lyd,2) }}</strong></td><td dir="ltr">{{ $invoice->received_date?->format('Y/m/d') ?? '—' }}</td><td dir="ltr">{{ $invoice->financial_return_date?->format('Y/m/d') ?? '—' }}</td><td>{{ $invoice->notes ?: '—' }}</td></tr>
             @empty
-                <tr><td colspan="12" class="print-empty">{{ __('No invoices match these filters.') }}</td></tr>
+                <tr><td colspan="13" class="print-empty">{{ __('No invoices match these filters.') }}</td></tr>
             @endforelse
             </tbody>
         </table>

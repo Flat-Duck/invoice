@@ -11,7 +11,7 @@ class Company extends Model
     /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'phone', 'email', 'contact_person', 'notes'];
+    protected $fillable = ['name', 'business_field', 'address', 'phone', 'email', 'contact_person', 'notes'];
 
     public function invoices(): HasMany
     {

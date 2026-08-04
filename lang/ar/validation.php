@@ -17,6 +17,6 @@ return [
         'company_id' => 'الشركة', 'administration_id' => 'الإدارة', 'invoice_number' => 'رقم الفاتورة',
         'invoice_date' => 'تاريخ الفاتورة', 'invoice_month' => 'الشهر', 'received_date' => 'تاريخ الاستلام',
         'financial_return_date' => 'تاريخ الإرجاع للمالية', 'amount' => 'المصروفات', 'exchange_rate' => 'سعر الصرف',
-        'location' => 'الموقع', 'name' => 'الاسم', 'username' => 'اسم المستخدم', 'password' => 'كلمة المرور'
+        'location' => 'الموقع', 'business_field' => 'مجال العمل', 'name' => 'الاسم', 'username' => 'اسم المستخدم', 'password' => 'كلمة المرور'
     ],
 ];

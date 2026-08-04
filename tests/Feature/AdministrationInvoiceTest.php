@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Administration;
+use App\Models\Company;
 use App\Models\Invoice;
 use App\Models\Setting;
 use App\Livewire\Invoices\Index as InvoiceIndex;
@@ -65,5 +66,16 @@ class AdministrationInvoiceTest extends TestCase
             ->assertRedirect(route('settings'));
 
         $this->assertSame('ar', Setting::valueFor('language'));
+    }
+
+    public function test_company_business_field_is_included_in_reports(): void
+    {
+        $company = Company::factory()->create(['business_field' => 'Oil Services']);
+        Invoice::factory()->for($company)->create(['invoice_date' => '2026-08-01']);
+
+        $this->withSession(['invoice_super_admin' => true])
+            ->get('/reports/print?year=2026&month=8')
+            ->assertOk()
+            ->assertSee('Oil Services');
     }
 }

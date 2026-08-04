@@ -15,6 +15,7 @@ class Index extends Component
     public bool $showForm = false;
     public ?int $editingId = null;
     public string $name = '';
+    public string $business_field = '';
     public string $address = '';
     public string $phone = '';
     public string $email = '';
@@ -32,7 +33,7 @@ class Index extends Component
     public function edit(Company $company): void
     {
         $this->editingId = $company->id;
-        $this->fill($company->only(['name', 'address', 'phone', 'email', 'contact_person', 'notes']));
+        $this->fill($company->only(['name', 'business_field', 'address', 'phone', 'email', 'contact_person', 'notes']));
         $this->showForm = true;
     }
 
@@ -40,6 +41,7 @@ class Index extends Component
     {
         $data = $this->validate([
             'name' => ['required', 'string', 'max:255'],
+            'business_field' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:1000'],
             'phone' => ['nullable', 'string', 'max:100'],
             'email' => ['nullable', 'email', 'max:255'],
@@ -64,7 +66,7 @@ class Index extends Component
 
     private function resetForm(): void
     {
-        $this->reset(['editingId', 'name', 'address', 'phone', 'email', 'contact_person', 'notes']);
+        $this->reset(['editingId', 'name', 'business_field', 'address', 'phone', 'email', 'contact_person', 'notes']);
         $this->resetValidation();
     }
 
@@ -72,8 +74,9 @@ class Index extends Component
     {
         return view('livewire.companies.index', [
             'companies' => Company::withCount('invoices')->when($this->search, fn ($q) => $q
-                ->where('name', 'like', "%{$this->search}%")
-                ->orWhere('contact_person', 'like', "%{$this->search}%"))->latest()->paginate(10),
+                    ->where('name', 'like', "%{$this->search}%")
+                    ->orWhere('business_field', 'like', "%{$this->search}%")
+                    ->orWhere('contact_person', 'like', "%{$this->search}%"))->latest()->paginate(10),
         ])->layout('components.layouts.app', ['title' => __('Companies')]);
     }
 }
