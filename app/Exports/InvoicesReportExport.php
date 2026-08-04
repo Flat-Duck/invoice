@@ -18,7 +18,7 @@ class InvoicesReportExport implements FromQuery, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['Month', 'Company', 'Location', 'WO / SA & TO', 'Expenses', 'Ex Rate', 'Total LYD', 'Remarks'];
+        return array_map(fn (string $heading) => __($heading), ['Month', 'Company', 'Administration', 'Location', 'WO / SA & TO', 'Expenses', 'Ex Rate', 'Total LYD', 'Received Date', 'Returned to Financial', 'Remarks']);
     }
 
     public function map($invoice): array
@@ -26,11 +26,14 @@ class InvoicesReportExport implements FromQuery, WithHeadings, WithMapping
         return [
             $invoice->invoice_date->format('F Y'),
             $invoice->company->name,
+            $invoice->administration?->name,
             $invoice->location,
             $invoice->agreement_references,
             $invoice->amount,
             $invoice->exchange_rate,
             $invoice->total_lyd,
+            $invoice->received_date?->format('Y-m-d'),
+            $invoice->financial_return_date?->format('Y-m-d'),
             $invoice->notes,
         ];
     }

@@ -4,6 +4,7 @@ use App\Http\Controllers\ReportExportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\EnsureInvoiceUserAuthenticated;
 use App\Livewire\Companies\Index as Companies;
+use App\Livewire\Administrations\Index as Administrations;
 use App\Livewire\Dashboard;
 use App\Livewire\Invoices\Index as Invoices;
 use App\Livewire\Reports\Index as Reports;
@@ -17,6 +18,7 @@ Route::post('/login', [AuthController::class, 'store'])->name('login.store');
 Route::middleware(EnsureInvoiceUserAuthenticated::class)->group(function (): void {
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::get('/companies', Companies::class)->name('companies');
+    Route::get('/administrations', Administrations::class)->name('administrations');
     Route::get('/invoices', Invoices::class)->name('invoices');
     Route::get('/reports', Reports::class)->name('reports');
     Route::get('/users', Users::class)->name('users');

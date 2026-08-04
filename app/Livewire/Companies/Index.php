@@ -48,18 +48,18 @@ class Index extends Component
         ]);
         Company::updateOrCreate(['id' => $this->editingId], $data);
         $this->showForm = false;
-        session()->flash('message', $this->editingId ? 'Company updated.' : 'Company added.');
+        session()->flash('message', $this->editingId ? __('Company updated.') : __('Company added.'));
         $this->resetForm();
     }
 
     public function delete(Company $company): void
     {
         if ($company->invoices()->exists()) {
-            $this->addError('delete', 'Delete or reassign this company’s invoices first.');
+            $this->addError('delete', __('Delete or reassign this company’s invoices first.'));
             return;
         }
         $company->delete();
-        session()->flash('message', 'Company deleted.');
+        session()->flash('message', __('Company deleted.'));
     }
 
     private function resetForm(): void
@@ -74,6 +74,6 @@ class Index extends Component
             'companies' => Company::withCount('invoices')->when($this->search, fn ($q) => $q
                 ->where('name', 'like', "%{$this->search}%")
                 ->orWhere('contact_person', 'like', "%{$this->search}%"))->latest()->paginate(10),
-        ])->layout('components.layouts.app', ['title' => 'Companies']);
+        ])->layout('components.layouts.app', ['title' => __('Companies')]);
     }
 }

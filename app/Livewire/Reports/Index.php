@@ -61,6 +61,6 @@ class Index extends Component
             'totals' => $totals,
             'companies' => Company::orderBy('name')->get(),
             'locations' => Invoice::query()->distinct()->orderBy('location')->pluck('location'),
-        ])->layout('components.layouts.app', ['title' => 'Reports']);
+        ])->layout('components.layouts.app', ['title' => __('Reports')]);
     }
 }

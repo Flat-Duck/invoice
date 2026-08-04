@@ -37,7 +37,7 @@ class ReportExportController extends Controller
         return view('reports.print', [
             'invoices' => $invoices,
             'filters' => $filters,
-            'reportTitle' => ucfirst($type).' Invoice Report',
+            'reportTitle' => __(ucfirst($type)).' '.__('Invoice Report'),
         ]);
     }
 

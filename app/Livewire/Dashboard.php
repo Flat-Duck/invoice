@@ -19,6 +19,6 @@ class Dashboard extends Component
             'monthTotal' => Invoice::where('invoice_year', $today->year)->where('invoice_month', $today->month)->sum('amount'),
             'yearTotal' => Invoice::where('invoice_year', $today->year)->sum('amount'),
             'recent' => Invoice::with('company')->latest('invoice_date')->limit(6)->get(),
-        ])->layout('components.layouts.app', ['title' => 'Dashboard']);
+        ])->layout('components.layouts.app', ['title' => __('Dashboard')]);
     }
 }

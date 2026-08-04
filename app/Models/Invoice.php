@@ -12,11 +12,11 @@ class Invoice extends Model
     /** @use HasFactory<\Database\Factories\InvoiceFactory> */
     use HasFactory;
 
-    protected $fillable = ['company_id', 'invoice_number', 'work_order', 'service_agreement', 'to_reference', 'invoice_date', 'invoice_year', 'invoice_month', 'amount', 'exchange_rate', 'location', 'notes'];
+    protected $fillable = ['company_id', 'administration_id', 'invoice_number', 'work_order', 'service_agreement', 'to_reference', 'invoice_date', 'received_date', 'financial_return_date', 'invoice_year', 'invoice_month', 'amount', 'exchange_rate', 'location', 'notes'];
 
     protected function casts(): array
     {
-        return ['invoice_date' => 'date', 'amount' => 'decimal:2', 'exchange_rate' => 'decimal:6'];
+        return ['invoice_date' => 'date', 'received_date' => 'date', 'financial_return_date' => 'date', 'amount' => 'decimal:2', 'exchange_rate' => 'decimal:6'];
     }
 
     protected static function booted(): void
@@ -32,6 +32,11 @@ class Invoice extends Model
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function administration(): BelongsTo
+    {
+        return $this->belongsTo(Administration::class);
     }
 
     public function getTotalLydAttribute(): float
@@ -53,6 +58,7 @@ class Invoice extends Model
         return $query->when($search, fn (Builder $q, string $term) => $q->where(
             fn (Builder $q) => $q->where('invoice_number', 'like', "%{$term}%")
                 ->orWhere('location', 'like', "%{$term}%")
+                ->orWhereHas('administration', fn (Builder $q) => $q->where('name', 'like', "%{$term}%"))
                 ->orWhereHas('company', fn (Builder $q) => $q->where('name', 'like', "%{$term}%"))
         ));
     }

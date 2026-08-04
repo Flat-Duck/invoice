@@ -67,20 +67,20 @@ class Index extends Component
         $user->save();
 
         $this->showForm = false;
-        session()->flash('message', $this->editingId ? 'User updated.' : 'User created.');
+        session()->flash('message', $this->editingId ? __('User updated.') : __('User created.'));
         $this->resetForm();
     }
 
     public function delete(User $user): void
     {
         if (Auth::id() === $user->id) {
-            $this->addError('delete', 'You cannot delete your own account.');
+            $this->addError('delete', __('You cannot delete your own account.'));
 
             return;
         }
 
         $user->delete();
-        session()->flash('message', 'User deleted.');
+        session()->flash('message', __('User deleted.'));
     }
 
     private function resetForm(): void
@@ -100,6 +100,6 @@ class Index extends Component
                 ->orderBy('name')
                 ->paginate(10),
             'currentUserId' => Auth::id(),
-        ])->layout('components.layouts.app', ['title' => 'Users']);
+        ])->layout('components.layouts.app', ['title' => __('Users')]);
     }
 }

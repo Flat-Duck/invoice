@@ -11,7 +11,7 @@ final class ReportQuery
     {
         $sort = $filters['sort'] ?? 'date';
         $columns = ['date' => 'invoice_date', 'amount' => 'amount', 'location' => 'location', 'company' => 'companies.name'];
-        $query = Invoice::query()->with('company');
+        $query = Invoice::query()->with(['company', 'administration']);
 
         if ($sort === 'company') {
             $query->join('companies', 'companies.id', '=', 'invoices.company_id')->select('invoices.*');

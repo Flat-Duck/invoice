@@ -47,7 +47,7 @@ class AuthController extends Controller
             return redirect()->intended(route('dashboard'));
         }
 
-        return back()->withErrors(['username' => 'Invalid credentials or inactive account.'])->onlyInput('username');
+        return back()->withErrors(['username' => __('Invalid credentials or inactive account.')])->onlyInput('username');
     }
 
     public function destroy(Request $request): RedirectResponse
