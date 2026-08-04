@@ -53,6 +53,7 @@ class AdministrationInvoiceTest extends TestCase
             ->get('/settings')
             ->assertOk()
             ->assertSee('dir="rtl"', false)
+            ->assertSee('class="rtl"', false)
             ->assertSee('الإعدادات');
     }
 
